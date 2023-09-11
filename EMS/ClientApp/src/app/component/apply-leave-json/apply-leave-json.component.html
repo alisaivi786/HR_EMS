@@ -1,0 +1,75 @@
+<!-- Add this div to display the error message -->
+<div *ngIf="errorTextMessage" class="alert alert-danger">{{ errorTextMessage }}</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngFor="let field of formData">
+      <label for="{{ field.name }}">{{ field.label }}:</label>
+      <ng-container [ngSwitch]="field.type">
+        <input
+        *ngSwitchCase="'date'"
+        type="date"
+        [formControlName]="field.name"
+        [placeholder]="field.label"
+        />
+        <input
+          *ngSwitchCase="'text'"
+          type="{{ field.type }}"
+          [formControlName]="field.name"
+          [placeholder]="field.label"
+          [ngClass]="{ 'error-text': form.get(field.name)?.hasError('required') }"
+        />
+        <input
+          *ngSwitchCase="'email'"
+          type="{{ field.type }}"
+          [formControlName]="field.name"
+          [placeholder]="field.label"
+          [ngClass]="{ 'error-text': form.get(field.name)?.hasError('required') }"
+        />
+        <select
+        *ngSwitchCase="'select'"
+        [formControlName]="field.name"
+        [required]="field.required"
+        [ngClass]="{ 'error-text': form.get(field.name)?.hasError('required') }"
+        >
+        <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>
+        </select>
+
+        <div *ngSwitchCase="'radio'">
+          <div *ngFor="let option of field.options">
+            <label>
+              <input
+                type="radio"
+                [formControlName]="field.name"
+                [value]="option"
+                [ngClass]="{ 'error-text': form.get(field.name)?.hasError('required') }"
+              />
+              {{ option }}
+            </label>
+          </div>
+        </div>
+        <textarea
+          *ngSwitchCase="'textarea'"
+          [formControlName]="field.name"
+          [placeholder]="field.label"
+          [ngClass]="{ 'error-text': form.get(field.name)?.hasError('required') }"
+        ></textarea>
+      </ng-container>
+
+      <div *ngIf="form.get(field.name)?.hasError('required')" class="text-danger">
+        {{ field.label }} is required.
+      </div>
+      <!-- <div *ngIf="form.get(field.name)?.touched || field.type === 'date' && (form.get(field.name)?.hasError('required') || form.get(field.name)?.value === '')" class="text-danger">
+        {{ field.label }} is required.
+      </div> -->
+      <div *ngIf="form.get(field.name)?.hasError('pattern')" class="error-text">
+        Please enter a valid {{ field.label }}.
+      </div>
+      
+    </div>
+    <div class="form-group">
+        <input class="btn btn-primary" type="submit" text="Submit" [disabled]="form.invalid"/>
+        <a class="btn btn-danger" style="margin-left: 5px; width: 80px;" type="button" routerLink="/leave-data" text="Back">Cancel</a>
+      </div>
+    <!-- <button type="submit" [disabled]="form.invalid">Submit</button> -->
+  </form>
+  
