@@ -6,7 +6,8 @@ public class ApplicationSettings
 
     public ConnectionStrings ConnectionString = new()
     {
-        SqlConnection = "Data Source =LAPTOP-4RV3RVOH\\SQLEXPRESS;Initial Catalog=HR_EMS; User ID=jams;Password=admin12345;encrypt=false",
+        //SqlConnection = "Data Source =LAPTOP-4RV3RVOH\\SQLEXPRESS;Initial Catalog=HR_EMS; User ID=jams;Password=admin12345;encrypt=false",
+        SqlConnection = "Data Source =85.13.199.236,58641;Initial Catalog=HR_EMS_AB; User ID=knowb4;Password=>^#2G{2ZVHyaUB^;TrustServerCertificate=True;Connect Timeout=120;",
     };
     public DbProvider DbProvider = new()
     {
